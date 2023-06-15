@@ -26,6 +26,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Vector2 playerDeathLaunchValues = new Vector2(15f, 15f);
     [SerializeField] Color32 playerDeathColor;
 
+    [Header("Weapon")]
+    [SerializeField] GameObject arrow;
+    [SerializeField] GameObject arrowSpawnPoint;
+
 
     // Start is called before the first frame update
     void Start()
@@ -72,6 +76,16 @@ public class PlayerMovement : MonoBehaviour
         {
             rigidBodyPlayer.velocity += new Vector2(0f, jumpSpeed);
         }
+    }
+
+    void OnFire(InputValue value) 
+    {
+        if (collidedWithEnemy) {
+            return;
+        }
+
+        animatorPlayer.Play("Shooting",  -1, 0f);
+        Instantiate(arrow, arrowSpawnPoint.transform.position, transform.rotation);
     }
 
     void CheckForPlayerDeath()
