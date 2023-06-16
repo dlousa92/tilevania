@@ -20,7 +20,9 @@ public class PlayerMovement : MonoBehaviour
     [Header("Gravity")]
     [SerializeField] float defaultGravityScale;
     bool isTouchingGround;
+    bool isTouchingLadder;
     bool collidedWithEnemy = false;
+    bool isJumping;
 
     [Header("Death")]
     [SerializeField] Vector2 playerDeathLaunchValues = new Vector2(15f, 15f);
@@ -68,12 +70,18 @@ public class PlayerMovement : MonoBehaviour
 
     void OnJump(InputValue value)
     {
+        isJumping = true;
         if (collidedWithEnemy) {
             return;
         }
-        
-        if(value.isPressed && isTouchingGround)
+
+        if(value.isPressed && isTouchingGround) 
         {
+            rigidBodyPlayer.velocity += new Vector2(0f, jumpSpeed);
+        } else if (value.isPressed && isTouchingLadder)
+        {
+            Debug.Log("Hello");
+            rigidBodyPlayer.gravityScale = defaultGravityScale;
             rigidBodyPlayer.velocity += new Vector2(0f, jumpSpeed);
         }
     }
@@ -103,10 +111,14 @@ public class PlayerMovement : MonoBehaviour
     void ClimbLadder()
     {
         int ladderLayerMask = LayerMask.GetMask("Ladders");
-        bool isTouchingLadder = colliderPlayerFeet.IsTouchingLayers(ladderLayerMask);
+        isTouchingLadder = colliderPlayerFeet.IsTouchingLayers(ladderLayerMask);
 
         if (isTouchingLadder) {
-            rigidBodyPlayer.gravityScale = 0f;
+            if (!isJumping)
+            {
+                rigidBodyPlayer.gravityScale = 0f;
+            }
+
             rigidBodyPlayer.velocity = new Vector2(rigidBodyPlayer.velocity.x, moveInput.y * climbSpeed);
 
             bool isPlayerClimbing = Mathf.Abs(moveInput.y) > Mathf.Epsilon;
@@ -126,6 +138,7 @@ public class PlayerMovement : MonoBehaviour
             return;
         } else {
             rigidBodyPlayer.gravityScale = defaultGravityScale;
+            isJumping = false;
         }
     }
 
