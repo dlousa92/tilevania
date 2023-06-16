@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4753401740828208629}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.255, y: -0.237, z: 0}
+  m_LocalPosition: {x: 0.255, y: -0.09, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -50,7 +50,7 @@ GameObject:
   - component: {fileID: 6174660186482291578}
   m_Layer: 8
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -253,6 +253,8 @@ MonoBehaviour:
   playerDeathColor:
     serializedVersion: 2
     rgba: 4280295607
+  arrow: {fileID: 3400318814329586859, guid: ab787d8c3973f4222a98ddc5fc260b72, type: 3}
+  arrowSpawnPoint: {fileID: 4753401740828208629}
 --- !u!61 &6174660186482291578
 BoxCollider2D:
   m_ObjectHideFlags: 0

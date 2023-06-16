@@ -31,4 +31,24 @@ public class Arrow : MonoBehaviour
 
         transform.localScale = new Vector2(arrowDirection, transform.localScale.y);
     }
+
+    void OnTriggerEnter2D(Collider2D other) 
+    {
+        Debug.Log(other);
+        if (other.tag == "Enemy") 
+        {
+            Destroy(other.gameObject);
+            DestroyArrow();
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D other) 
+    {
+        Invoke("DestroyArrow", 5f);
+    }
+
+    void DestroyArrow()
+    {
+        Destroy(gameObject);
+    }
 }
